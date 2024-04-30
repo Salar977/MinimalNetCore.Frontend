@@ -1,9 +1,58 @@
 ﻿@page "/"
+@using Models
+@using System.Globalization
 
 <PageTitle>Game Catalog</PageTitle>
 
-<table>
-    <thead>
-        
+<table class="table table-striped table-bordered table-hover"
+    <thead class="table-dark">
+        <th>Id</th>
+        <th>Name</th>
+        <th>Genre</th>
+        <th class="text-end">Price</th>
+        <th>Release Date</th>
+        <th></th>
     </thead>
+    <tbody>
+        @foreach (var game in games) {
+            <tr>
+                <td>@game.Id</td>
+                <td>@game.Name</td>
+                <td>@game.Genre</td>
+                <td class="text-end">@string.Format(new CultureInfo("en-US"), "{0:C}", game.Price)</td>
+                <td>@game.ReleaseDate</td>
+                <td>
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@code {
+    private GameSummary[] games = [
+        new() {
+            Id = 1,
+            Name = "Skyrim",
+            Genre = "Adventure",
+            Price = 50m,
+            ReleaseDate = new DateOnly(2011, 11, 11)
+        },
+
+        new() {
+            Id = 2,
+            Name = "Fifa 23",
+            Genre = "Sport",
+            Price = 40m,
+            ReleaseDate = new DateOnly(2022, 09, 27)
+        },
+
+        new() {
+            Id = 3,
+            Name = "Elden Ring",
+            Genre = "Adventure",
+            Price = 69.99m,
+            ReleaseDate = new DateOnly(2022, 02, 15)
+        }
+    ];
+}
