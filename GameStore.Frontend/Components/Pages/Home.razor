@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using System.Globalization
+@inject GamesClient Client
 
 <PageTitle>Game Catalog</PageTitle>
 
@@ -39,11 +40,10 @@ else
 }
 
 @code {
-    private GamesClient client = new();
     private List<GameSummary>? games;
 
     protected override void OnInitialized()
     {
-        games = client.GetGames();
+        games = Client.GetGames();
     }
 }

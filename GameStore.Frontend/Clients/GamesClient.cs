@@ -38,17 +38,38 @@ public class GamesClient
     public void AddGame(GameDetails game)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(game.GenreId);
-        var genre = genres.SingleOrDefault(x => x.Id == int.Parse(game.GenreId));
-
+        var genre = genres.Single(x => x.Id == int.Parse(game.GenreId));
+        
         var gameSummary = new GameSummary
         {
             Id = games.Count + 1,
             Name = game.Name,
-            Genre = genre!.Name,
+            Genre = genre.Name,
             Price = game.Price,
             ReleaseDate = game.ReleaseDate,
         };
         
         games.Add(gameSummary);
+    }
+
+    public GameDetails GetGame(int id)
+    {
+        GameSummary? game = games.Find(x => x.Id == id);
+
+        ArgumentNullException.ThrowIfNull(game);
+
+        var genre = genres.Single(genre => string.Equals(
+            genre.Name,
+            game.Genre,
+            StringComparison.OrdinalIgnoreCase));
+
+        return new GameDetails
+        {
+            Id = game.Id,
+            Name = game.Name,
+            GenreId = genre.Id.ToString(),
+            Price = game.Price,
+            ReleaseDate = game.ReleaseDate
+        };
     }
 }
