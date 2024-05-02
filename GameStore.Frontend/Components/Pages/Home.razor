@@ -1,11 +1,18 @@
 ﻿@page "/"
-@using Clients
-@using Models
 @using System.Globalization
 
 <PageTitle>Game Catalog</PageTitle>
 
-<table class="table table-striped table-bordered table-hover"
+<div class="mt-2 mb-1">
+    <a class="btn btn-primary" role="button" href="/editgame">New Game</a>
+</div>
+
+@if(games is null) {
+    <p><em>Loading...</em></p>
+}
+else
+{
+<table class="table table-striped table-bordered table-hover">
     <thead class="table-dark">
         <th>Id</th>
         <th>Name</th>
@@ -15,7 +22,7 @@
         <th></th>
     </thead>
     <tbody>
-        @foreach (var game in client) {
+        @foreach (var game in games) {
             <tr>
                 <td>@game.Id</td>
                 <td>@game.Name</td>
@@ -29,8 +36,14 @@
         }
     </tbody>
 </table>
+}
 
 @code {
     private GamesClient client = new();
-    private 
+    private List<GameSummary>? games;
+
+    protected override void OnInitialized()
+    {
+        games = client.GetGames();
+    }
 }
