@@ -1,2 +1,6 @@
 GameStore.Frontend/obj/
 GameStore.Frontend/bin/
+GameStore.Frontend/obj/Debug/net8.0/GameStore.Frontend.AssemblyInfo.cs
+GameStore.Frontend/obj/Debug/net8.0/GameStore.Frontend.AssemblyInfoInputs.cache
+GameStore.Frontend/obj/Debug/net8.0/GameStore.Frontend.GeneratedMSBuildEditorConfig.editorconfig
+GameStore.Frontend/obj/Debug/net8.0/project.razor.vscode.bin
