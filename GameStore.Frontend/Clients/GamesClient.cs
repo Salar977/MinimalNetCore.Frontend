@@ -8,8 +8,8 @@ public class GamesClient
     [
         new() {
             Id = 1,
-            Name = "Skyrim",
-            Genre = "Adventure",
+            Name = "Warzone",
+            Genre = "Action",
             Price = 50m,
             ReleaseDate = new DateOnly(2011, 11, 11)
         },
@@ -17,15 +17,15 @@ public class GamesClient
         new() {
             Id = 2,
             Name = "Fifa 23",
-            Genre = "Sport",
+            Genre = "Sports",
             Price = 40m,
             ReleaseDate = new DateOnly(2022, 09, 27)
         },
 
         new() {
             Id = 3,
-            Name = "Elden Ring",
-            Genre = "Adventure",
+            Name = "Need For Speed",
+            Genre = "Racing",
             Price = 69.99m,
             ReleaseDate = new DateOnly(2022, 02, 15)
         }
@@ -37,9 +37,8 @@ public class GamesClient
 
     public void AddGame(GameDetails game)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(game.GenreId);
-        var genre = genres.Single(x => x.Id == int.Parse(game.GenreId));
-        
+        Genre genre = GetGenreById(game.GenreId);
+
         var gameSummary = new GameSummary
         {
             Id = games.Count + 1,
@@ -48,15 +47,13 @@ public class GamesClient
             Price = game.Price,
             ReleaseDate = game.ReleaseDate,
         };
-        
+
         games.Add(gameSummary);
     }
 
     public GameDetails GetGame(int id)
     {
-        GameSummary? game = games.Find(x => x.Id == id);
-
-        ArgumentNullException.ThrowIfNull(game);
+        GameSummary game = GetGameSummaryById(id);
 
         var genre = genres.Single(genre => string.Equals(
             genre.Name,
@@ -71,5 +68,34 @@ public class GamesClient
             Price = game.Price,
             ReleaseDate = game.ReleaseDate
         };
+    }
+
+    public void UpdateGame(GameDetails updatedGame)
+    {
+        var genre = GetGenreById(updatedGame.GenreId);
+        GameSummary existingGame = GetGameSummaryById(updatedGame.Id);
+        existingGame.Name = updatedGame.Name;
+        existingGame.Genre = genre.Name;
+        existingGame.Price = updatedGame.Price;
+        existingGame.ReleaseDate = updatedGame.ReleaseDate;
+    }
+
+    public void DeleteGame(int id)
+    {
+        var game = GetGameSummaryById(id);
+        games.Remove(game);
+    }
+
+    private GameSummary GetGameSummaryById(int id)
+    {
+        GameSummary? game = games.Find(game => game.Id == id);
+        ArgumentNullException.ThrowIfNull(game);
+        return game;
+    }
+
+    private Genre GetGenreById(string? id)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        return genres.Single(x => x.Id == int.Parse(id));
     }
 }

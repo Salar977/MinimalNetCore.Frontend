@@ -33,5 +33,5 @@ public class GenresClient
         }
     ];
 
-    public Genre[] GetGenres() => genres;
+    public Genre[] GetGenres() => [.. genres];
 }

@@ -31,6 +31,11 @@ else
                 <td class="text-end">@string.Format(new CultureInfo("en-US"), "{0:C}", game.Price)</td>
                 <td>@game.ReleaseDate</td>
                 <td>
+                    <div>
+                        <a class="btn btn-primary me-2" role="button" href="/editgame/@game.Id">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </div>
                     
                 </td>
             </tr>
